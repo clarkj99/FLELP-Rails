@@ -1,9 +1,9 @@
 class Api::V1::LocationsController < ApplicationController
   before_action :find_location, only: [:show, :update, :destroy]
-  skip_before_action :authorized, only: [:index]
+  # skip_before_action :authorized, only: [:index]
 
   def index
-    @locations = Location.all
+    @locations = current_user.locations
     # render json: LocationSerializer.new(@locations).serialized_json, status: :ok
     render json: @locations, status: :ok
   end
@@ -37,7 +37,7 @@ class Api::V1::LocationsController < ApplicationController
   private
 
   def find_location
-    @location = Location.find(params[:id])
+    @location = current_user.locations.find(params[:id])
   end
 
   def location_params

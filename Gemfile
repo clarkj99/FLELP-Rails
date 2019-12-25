@@ -45,3 +45,5 @@ gem "jwt", "~> 2.2"
 gem "dotenv-rails", "~> 2.7"
 
 gem 'fast_jsonapi'
+
+gem 'rest-client'

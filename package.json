@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "rest-client": "^0.1.5"
+  }
+}

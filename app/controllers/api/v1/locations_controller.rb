@@ -32,6 +32,7 @@ class Api::V1::LocationsController < ApplicationController
 
   def destroy
     @location.destroy
+    render json: @location, status: :ok
   end
 
   private

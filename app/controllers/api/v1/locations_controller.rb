@@ -15,7 +15,6 @@ class Api::V1::LocationsController < ApplicationController
   def create
     @location = current_user.locations.create(location_params)
     if @location.valid?
-      @location.save
       render json: @location, status: :ok
     else
       render json: { error: @location.errors.full_messages[0] }, status: :bad_request

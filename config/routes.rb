@@ -4,6 +4,7 @@ Rails.application.routes.draw do
       resources :users, only: [:create]
       resources :locations, only: [:index, :create, :show, :destroy]
       resources :businesses, only: [:index, :show, :create, :destroy]
+      resources :favorite_businesses, only: [:index, :create, :destroy]
       post "/login", to: "auth#create"
       get "/profile", to: "users#profile"
     end

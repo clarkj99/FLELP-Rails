@@ -16,8 +16,14 @@ class Api::V1::BusinessesController < ApplicationController
     key = ENV["YELP_API_KEY"]
     url = "https://api.yelp.com/v3/businesses/" + params[:id]
     headers = { authorization: "Bearer " + key }
-    response = RestClient.get(url, headers)
-    render json: response, status: :ok
+
+    begin
+      response = RestClient.get(url, headers)
+    rescue RestClient::ExceptionWithResponse => err
+      render json: err.response.to_s
+    else
+      render json: response, status: :ok
+    end
   end
 
   private

@@ -8,8 +8,13 @@ class Api::V1::BusinessesController < ApplicationController
     term = "restaurants"
     url = "https://api.yelp.com/v3/businesses/search?sortby=distance&limit=50&rterm=" + term + "&location=" + loc
     headers = { authorization: "Bearer " + key }
-    response = RestClient.get(url, headers)
-    render json: response, status: :ok
+    begin
+      response = RestClient.get(url, headers)
+    rescue RestClient::ExceptionWithResponse => err
+      render json: err.response.to_s
+    else
+      render json: response, status: :ok
+    end
   end
 
   def show
@@ -18,8 +23,11 @@ class Api::V1::BusinessesController < ApplicationController
     headers = { authorization: "Bearer " + key }
 
     begin
+      retries ||= 0
       response = RestClient.get(url, headers)
     rescue RestClient::ExceptionWithResponse => err
+      sleep 0.4
+      retry if (retries += 1) <= 5
       render json: err.response.to_s
     else
       render json: response, status: :ok

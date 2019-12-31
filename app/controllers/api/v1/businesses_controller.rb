@@ -26,7 +26,7 @@ class Api::V1::BusinessesController < ApplicationController
       retries ||= 0
       response = RestClient.get(url, headers)
     rescue RestClient::ExceptionWithResponse => err
-      sleep 0.4
+      sleep 0.8
       retry if (retries += 1) <= 5
       render json: err.response.to_s
     else

@@ -12,7 +12,7 @@ class Api::V1::FavoriteBusinessesController < ApplicationController
   end
 
   def create
-    @favorite_business = current_user.favorite_businesses.create(business_id: favorite_business_params[:id])
+    @favorite_business = current_user.favorite_businesses.create(business_id: favorite_business_params[:id], name: favorite_business_params[:name], latitude: favorite_business_params[:coordinates][:latitude], longitude: favorite_business_params[:coordinates][:longitude])
     if @favorite_business.valid?
       render json: @favorite_business, status: :ok
     else
@@ -27,6 +27,6 @@ class Api::V1::FavoriteBusinessesController < ApplicationController
   end
 
   def favorite_business_params
-    params.require(:business).permit(:id)
+    params.require(:business).permit(:id, :name, :coordinates => [:latitude, :longitude])
   end
 end

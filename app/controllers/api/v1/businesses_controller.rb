@@ -5,8 +5,8 @@ class Api::V1::BusinessesController < ApplicationController
   def index
     key = ENV["YELP_API_KEY"]
     loc = [@location.address1, @location.city, @location.state, @location.zip].join(" ")
-    term = "restaurants"
-    url = "https://api.yelp.com/v3/businesses/search?sortby=distance&limit=50&rterm=" + term + "&location=" + loc
+    term = "food"
+    url = "https://api.yelp.com/v3/businesses/search?sort_by=" + params[:sort] + "&limit=50&term=" + term + "&location=" + loc
     headers = { authorization: "Bearer " + key }
     begin
       response = RestClient.get(url, headers)
